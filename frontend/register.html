@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SAGE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Updated Ocean Theme Colors */
+            --primary-color: #1e3a8a;      /* Navy Blue */
+            --secondary-color: #0f172a;     /* Deep Black */
+            --accent-color: #065f46;        /* Dark Green */
+            --success-color: #10b981;       /* Green */
+            --warning-color: #f59e0b;       /* Amber */
+            --error-color: #ef4444;         /* Red */
+            
+            /* Background Colors */
+            --bg-primary: #000000;          /* Pure Black */
+            --bg-secondary: #0f172a;        /* Dark Slate */
+            --bg-tertiary: #1e293b;         /* Lighter Slate */
+            --text-primary: #f8fafc;        /* Light Gray */
+            --text-secondary: #cbd5e1;      /* Medium Gray */
+            --text-muted: #94a3b8;          /* Muted Gray */
+            
+            --border-color: #334155;        /* Border Gray */
+            --hover-bg: #1e3a8a;            /* Navy Blue Hover */
+            
+            /* Ocean Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            --gradient-hero: linear-gradient(135deg, #000000 0%, #1e3a8a 70%, #065f46 100%);
+            --gradient-ocean: linear-gradient(180deg, #1e3a8a 0%, #1e3a8a 70%, #065f46 100%);
+            --gradient-dark-ocean: linear-gradient(180deg, #0f172a 0%, #1e3a8a 50%, #065f46 100%);
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6);
+            --shadow-ocean: 0 25px 50px -12px rgba(30, 58, 138, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--gradient-hero);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            color: var(--text-primary);
+        }
+
+        /* Animated background elements */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96V200H1392C1344,200,1248,200,1152,200C1056,200,960,200,864,200C768,200,672,200,576,200C480,200,384,200,288,200C192,200,96,200,48,200L0,200Z' fill='%23065f46' fill-opacity='0.3'/%3E%3C/svg%3E") repeat-x;
+            animation: wave 20s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(0) scaleX(1); }
+            50% { transform: translateX(-25px) scaleX(1.1); }
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+            color: rgba(6, 95, 70, 0.6);
+        }
+
+        .floating-element:nth-child(1) {
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+            font-size: 40px;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 70%;
+            right: 15%;
+            animation-delay: 7s;
+            font-size: 60px;
+        }
+
+        .floating-element:nth-child(3) {
+            top: 40%;
+            right: 25%;
+            animation-delay: 14s;
+            font-size: 35px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(3deg); }
+            66% { transform: translateY(15px) rotate(-3deg); }
+        }
+
+        .register-container {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            border-radius: 24px;
+            box-shadow: var(--shadow-ocean);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            position: relative;
+            margin: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 0 30px rgba(30, 58, 138, 0.5);
+        }
+
+        .logo i {
+            color: white;
+            font-size: 32px;
+        }
+
+        .brand-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .user-type-selector {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-radius: 16px;
+            padding: 4px;
+            margin-bottom: 32px;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .user-type-option {
+            flex: 1;
+            padding: 16px 24px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+            color: var(--text-secondary);
+        }
+
+        .user-type-option.active {
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 0 20px rgba(30, 58, 138, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .user-type-option i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .verification-notice {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+            box-shadow: 0 0 20px rgba(6, 95, 70, 0.3);
+        }
+
+        .verification-notice.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .verification-notice i {
+            margin-right: 8px;
+        }
+
+        .form-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-icon {
+            color: var(--primary-color);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .form-label.required::after {
+            content: ' *';
+            color: var(--error-color);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+            z-index: 1;
+        }
+
+        .input-icon .form-input {
+            padding-left: 48px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 16px;
+            z-index: 1;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .authority-fields {
+            display: none;
+            background: var(--bg-secondary);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 16px;
+        }
+
+        .authority-fields.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .password-strength {
+            margin-top: 8px;
+        }
+
+        .strength-meter {
+            height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-weak { background: var(--error-color); width: 25%; }
+        .strength-fair { background: var(--warning-color); width: 50%; }
+        .strength-good { background: var(--primary-color); width: 75%; }
+        .strength-strong { background: var(--success-color); width: 100%; }
+
+        .strength-text {
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            margin-top: 2px;
+            transform: scale(1.2);
+        }
+
+        .terms-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .terms-text a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-ocean);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-button:hover:not(.loading) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.6);
+        }
+
+        .register-button:active {
+            transform: translateY(0);
+        }
+
+        .register-button.loading {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+
+        .button-spinner {
+            display: none;
+            margin-right: 8px;
+        }
+
+        .loading .button-spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            background: var(--bg-secondary);
+            padding: 0 16px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .social-register {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .social-button {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .social-button:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(30, 58, 138, 0.3);
+        }
+
+        .social-button i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .google i { color: #db4437; }
+        .microsoft i { color: #00a1f1; }
+
+        .login-link {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 24px;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid transparent;
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+            border-color: var(--error-color);
+        }
+
+        .alert.success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .alert.info {
+            background: rgba(30, 58, 138, 0.1);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        @media (max-width: 640px) {
+            .register-container {
+                padding: 24px;
+                margin: 16px;
+                border-radius: 20px;
+                max-height: 95vh;
+            }
+
+            .brand-title {
+                font-size: 24px;
+            }
+
+            .user-type-option {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .social-register {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-elements {
+                display: none;
+            }
+        }
+
+        /* Custom scrollbar */
+        .register-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .register-container::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+        }
+
+        .register-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .register-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="wave"></div>
+    
+    <div class="floating-elements">
+        <i class="fas fa-anchor floating-element"></i>
+        <i class="fas fa-ship floating-element"></i>
+        <i class="fas fa-life-ring floating-element"></i>
+    </div>
+    
+    <div class="register-container">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-water"></i>
+            </div>
+            <h1 class="brand-title">Join SAGE</h1>
+            <p class="brand-subtitle">Create your account to help protect India's coastal communities</p>
+        </div>
+
+        <div class="user-type-selector">
+            <div class="user-type-option active" data-type="citizen">
+                <i class="fas fa-user"></i>
+                Citizen
+            </div>
+            <div class="user-type-option" data-type="authority">
+                <i class="fas fa-shield-alt"></i>
+                Authority
+            </div>
+        </div>
+
+        <div class="verification-notice" id="verificationNotice">
+            <i class="fas fa-info-circle"></i>
+            Authority accounts require manual verification by INCOIS administrators
+        </div>
+
+        <div class="alert" id="alertMessage">
+            <i class="fas fa-info-circle"></i>
+            <span id="alertText">Alert message will appear here</span>
+        </div>
+
+        <form id="registerForm">
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-user section-icon"></i>
+                    Personal Information
+                </h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label required" for="firstName">First Name</label>
+                        <div class="input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Enter your first name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label required" for="lastName">Last Name</label>
+                        <div class="input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required" for="email">Email Address</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required" for="phone">Phone Number</label>
+                    <div class="input-icon">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91-XXXXXXXXXX" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Security -->
+            <div class="form-section">
+                <h3 class="section-title">
+                    <i class="fas fa-lock section-icon"></i>
+                    Account Security
+                </h3>
+
+                <div class="form-group">
+                    <label class="form-label required" for="password">Password</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" class="form-input" placeholder="Create a strong password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('password')"></i>
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-meter">
+                            <div class="strength-fill" id="strengthFill"></div>
+                        </div>
+                        <div class="strength-text" id="strengthText">Password strength: Weak</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label required" for="confirmPassword">Confirm Password</label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('confirmPassword')"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authority Fields (Hidden by default) -->
+            <div class="authority-fields" id="authorityFields">
+                <h3 class="section-title">
+                    <i class="fas fa-shield-alt section-icon"></i>
+                    Authority Information
+                </h3>
+
+                <div class="form-group">
+                    <label class="form-label required" for="authorityId">Authority ID</label>
+                    <div class="input-icon">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="authorityId" name="authorityId" class="form-input" placeholder="Enter your official authority ID">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label required" for="organization">Organization</label>
+                        <select id="organization" name="organization" class="form-select">
+                            <option value="">Select Organization</option>
+                            <option value="incois">INCOIS</option>
+                            <option value="coast_guard">Indian Coast Guard</option>
+                            <option value="navy">Indian Navy</option>
+                            <option value="disaster_management">Disaster Management</option>
+                            <option value="state_police">State Police</option>
+                            <option value="port_authority">Port Authority</option>
+                            <option value="meteorology">IMD</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="department">Department</label>
+                        <input type="text" id="department" name="department" class="form-input" placeholder="Enter your department">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="designation">Designation</label>
+                    <input type="text" id="designation" name="designation" class="form-input" placeholder="Enter your designation/position">
+                </div>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="terms-checkbox">
+                <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                <div class="terms-text">
+                    I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> and <a href="#" onclick="showPrivacy()">Privacy Policy</a>. I understand that my reports will be used to help protect coastal communities and may be shared with relevant authorities.
+                </div>
+            </div>
+
+            <div class="terms-checkbox">
+                <input type="checkbox" id="agreeUpdates" name="agreeUpdates">
+                <div class="terms-text">
+                    I agree to receive important updates and alerts about ocean hazards in my area via email and SMS.
+                </div>
+            </div>
+
+            <button type="submit" class="register-button" id="registerBtn">
+                <i class="fas fa-spinner button-spinner"></i>
+                <span id="registerText">Create Account</span>
+            </button>
+        </form>
+
+        <div class="divider">
+            <span>Or register with</span>
+        </div>
+
+        <div class="social-register">
+            <button class="social-button google" onclick="socialRegister('google')">
+                <i class="fab fa-google"></i>
+                Google
+            </button>
+            <button class="social-button microsoft" onclick="socialRegister('microsoft')">
+                <i class="fab fa-microsoft"></i>
+                Microsoft
+            </button>
+        </div>
+
+        <div class="login-link">
+            Already have an account? <a href="login.html">Sign in here</a>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:5000/api'; // Change to your backend URL
+        let currentUserType = 'citizen';
+        let passwordStrength = 0;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setupPasswordValidation();
+            console.log('🌊 SAGE Registration Page Loaded');
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // User type selector
+            document.querySelectorAll('.user-type-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    switchUserType(this.dataset.type);
+                });
+            });
+
+            // Form submission
+            document.getElementById('registerForm').addEventListener('submit', handleFormSubmission);
+
+            // Real-time validation
+            setupRealTimeValidation();
+        }
+
+        // Switch user type
+        function switchUserType(type) {
+            document.querySelectorAll('.user-type-option').forEach(o => o.classList.remove('active'));
+            document.querySelector(`[data-type="${type}"]`).classList.add('active');
+            
+            currentUserType = type;
+            const authorityFields = document.getElementById('authorityFields');
+            const verificationNotice = document.getElementById('verificationNotice');
+            
+            if (type === 'authority') {
+                authorityFields.classList.add('show');
+                verificationNotice.classList.add('show');
+                
+                // Make authority fields required
+                document.getElementById('authorityId').required = true;
+                document.getElementById('organization').required = true;
+            } else {
+                authorityFields.classList.remove('show');
+                verificationNotice.classList.remove('show');
+                
+                // Remove required from authority fields
+                document.getElementById('authorityId').required = false;
+                document.getElementById('organization').required = false;
+            }
+        }
+
+        // Setup password validation
+        function setupPasswordValidation() {
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            
+            passwordInput.addEventListener('input', function() {
+                checkPasswordStrength(this.value);
+                validatePasswordMatch();
+            });
+            
+            confirmPasswordInput.addEventListener('input', validatePasswordMatch);
+        }
+
+        // Check password strength
+        function checkPasswordStrength(password) {
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            let feedback = '';
+            
+            // Length check
+            if (password.length >= 8) strength++;
+            else feedback = 'Use at least 8 characters';
+            
+            // Uppercase check
+            if (/[A-Z]/.test(password)) strength++;
+            else if (strength > 0) feedback = 'Add uppercase letters';
+            
+            // Lowercase check
+            if (/[a-z]/.test(password)) strength++;
+            else if (strength > 1) feedback = 'Add lowercase letters';
+            
+            // Number check
+            if (/\d/.test(password)) strength++;
+            else if (strength > 2) feedback = 'Add numbers';
+            
+            // Special character check
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+            else if (strength > 3) feedback = 'Add special characters';
+            
+            passwordStrength = strength;
+            
+            // Update UI
+            const strengthLevels = ['weak', 'weak', 'fair', 'good', 'strong'];
+            const strengthLabels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+            
+            const level = strengthLevels[strength];
+            strengthFill.className = `strength-fill strength-${level}`;
+            strengthText.textContent = `Password strength: ${strengthLabels[strength]}${feedback ? ' - ' + feedback : ''}`;
+        }
+
+        // Validate password match
+        function validatePasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const confirmInput = document.getElementById('confirmPassword');
+            
+            if (confirmPassword && password !== confirmPassword) {
+                confirmInput.setCustomValidity('Passwords do not match');
+                confirmInput.style.borderColor = 'var(--error-color)';
+            } else {
+                confirmInput.setCustomValidity('');
+                confirmInput.style.borderColor = 'var(--border-color)';
+            }
+        }
+
+        // Setup real-time validation
+        function setupRealTimeValidation() {
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            
+            // Email validation
+            emailInput.addEventListener('blur', async function() {
+                const email = this.value.trim();
+                if (email) {
+                    try {
+                        // Simulate API call for demo
+                        console.log('Checking email availability:', email);
+                        // In real implementation, check with backend API
+                    } catch (error) {
+                        console.log('Email check skipped - demo mode');
+                    }
+                }
+            });
+
+            // Phone validation
+            phoneInput.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, ''); // Remove non-digits
+                
+                if (value.length > 0) {
+                    if (value.length <= 10) {
+                        // Indian mobile number format
+                        if (value.length === 10) {
+                            this.value = `+91-${value.slice(0, 5)}-${value.slice(5)}`;
+                        } else {
+                            this.value = `+91-${value}`;
+                        }
+                    }
+                }
+                
+                // Validate Indian mobile number
+                const phoneRegex = /^\+91-\d{5}-\d{5}$/;
+                if (this.value && !phoneRegex.test(this.value)) {
+                    this.style.borderColor = 'var(--error-color)';
+                } else if (this.value) {
+                    this.style.borderColor = 'var(--success-color)';
+                }
+            });
+        }
+
+        // Toggle password visibility
+        function togglePassword(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const toggleIcon = passwordField.nextElementSibling;
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Handle form submission
+        async function handleFormSubmission(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+
+            const registerBtn = document.getElementById('registerBtn');
+            const registerText = document.getElementById('registerText');
+            
+            // Show loading state
+            registerBtn.classList.add('loading');
+            registerText.textContent = 'Creating Account...';
+            registerBtn.disabled = true;
+            
+            try {
+                // Collect form data
+                const formData = collectFormData();
+                
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                showAlert('Account created successfully! Please check your email for verification instructions.', 'success');
+                
+                // Show additional message for authorities
+                if (currentUserType === 'authority') {
+                    setTimeout(() => {
+                        showAlert('Authority accounts require manual verification. You will be contacted within 24-48 hours.', 'info');
+                    }, 3000);
+                }
+                
+                // Redirect after delay
+                setTimeout(() => {
+                    window.location.href = 'login.html?registered=true';
+                }, 5000);
+
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert(error.message || 'Failed to create account. Please try again.', 'error');
+            } finally {
+                // Reset button state
+                registerBtn.classList.remove('loading');
+                registerText.textContent = 'Create Account';
+                registerBtn.disabled = false;
+            }
+        }
+
+        // Collect form data
+        function collectFormData() {
+            const baseData = {
+                email: document.getElementById('email').value.trim(),
+                password: document.getElementById('password').value,
+                userType: currentUserType,
+                profile: {
+                    firstName: document.getElementById('firstName').value.trim(),
+                    lastName: document.getElementById('lastName').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                },
+                preferences: {
+                    receiveUpdates: document.getElementById('agreeUpdates').checked,
+                    language: 'en',
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                },
+                registrationSource: 'web'
+            };
+
+            // Add authority-specific data
+            if (currentUserType === 'authority') {
+                baseData.authorityId = document.getElementById('authorityId').value.trim();
+                baseData.profile.organization = document.getElementById('organization').value;
+                baseData.profile.department = document.getElementById('department').value.trim();
+                baseData.profile.designation = document.getElementById('designation').value.trim();
+                baseData.profile.verificationStatus = 'pending';
+            }
+
+            return baseData;
+        }
+
+        // Validate form
+        function validateForm() {
+            const errors = [];
+
+            // Basic validation
+            const requiredFields = [
+                { id: 'firstName', name: 'First Name' },
+                { id: 'lastName', name: 'Last Name' },
+                { id: 'email', name: 'Email' },
+                { id: 'phone', name: 'Phone' },
+                { id: 'password', name: 'Password' },
+                { id: 'confirmPassword', name: 'Confirm Password' }
+            ];
+
+            // Add authority required fields
+            if (currentUserType === 'authority') {
+                requiredFields.push(
+                    { id: 'authorityId', name: 'Authority ID' },
+                    { id: 'organization', name: 'Organization' }
+                );
+            }
+
+            // Check required fields
+            for (const field of requiredFields) {
+                const element = document.getElementById(field.id);
+                if (!element.value.trim()) {
+                    errors.push(`${field.name} is required`);
+                    element.style.borderColor = 'var(--error-color)';
+                } else {
+                    element.style.borderColor = 'var(--border-color)';
+                }
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email && !emailRegex.test(email)) {
+                errors.push('Please enter a valid email address');
+            }
+
+            // Phone validation
+            const phone = document.getElementById('phone').value.trim();
+            const phoneRegex = /^\+91-\d{5}-\d{5}$/;
+            if (phone && !phoneRegex.test(phone)) {
+                errors.push('Please enter a valid Indian mobile number');
+            }
+
+            // Password validation
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password.length < 8) {
+                errors.push('Password must be at least 8 characters long');
+            }
+            
+            if (passwordStrength < 3) {
+                errors.push('Password is too weak. Please use a stronger password');
+            }
+            
+            if (password !== confirmPassword) {
+                errors.push('Passwords do not match');
+            }
+
+            // Terms acceptance
+            if (!document.getElementById('agreeTerms').checked) {
+                errors.push('You must agree to the Terms of Service and Privacy Policy');
+            }
+
+            // Authority ID validation
+            if (currentUserType === 'authority') {
+                const authorityId = document.getElementById('authorityId').value.trim();
+                if (authorityId.length < 3) {
+                    errors.push('Authority ID must be at least 3 characters long');
+                }
+            }
+
+            // Show errors
+            if (errors.length > 0) {
+                showAlert(errors[0], 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Social registration
+        async function socialRegister(provider) {
+            showAlert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} registration will be implemented with OAuth 2.0`, 'info');
+        }
+
+        // Show alert
+        function showAlert(message, type) {
+            const alertElement = document.getElementById('alertMessage');
+            const alertText = document.getElementById('alertText');
+            const alertIcon = alertElement.querySelector('i');
+            
+            alertText.textContent = message;
+            alertElement.className = `alert ${type} show`;
+            
+            // Update icon based on type
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                info: 'fas fa-info-circle'
+            };
+            
+            alertIcon.className = icons[type] || 'fas fa-info-circle';
+            
+            // Scroll to alert
+            alertElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Auto-hide success and info messages
+            if (type !== 'error') {
+                setTimeout(() => {
+                    alertElement.classList.remove('show');
+                }, 8000);
+            }
+        }
+
+        // Show terms modal (placeholder)
+        function showTerms() {
+            alert('Terms of Service modal would open here. This would contain the full terms and conditions for using SAGE platform.');
+        }
+
+        // Show privacy modal (placeholder)
+        function showPrivacy() {
+            alert('Privacy Policy modal would open here. This would explain how user data is collected, used, and protected.');
+        }
+
+        // Organization suggestions
+        document.getElementById('organization').addEventListener('change', function() {
+            const value = this.value;
+            const departmentInput = document.getElementById('department');
+            const designationInput = document.getElementById('designation');
+            
+            const suggestions = {
+                'incois': { department: 'Ocean Information Services', designation: 'Research Scientist' },
+                'coast_guard': { department: 'Maritime Safety', designation: 'Coast Guard Officer' },
+                'navy': { department: 'Naval Operations', designation: 'Naval Officer' },
+                'disaster_management': { department: 'Emergency Response', designation: 'Disaster Management Officer' },
+                'state_police': { department: 'Coastal Police', designation: 'Police Officer' },
+                'port_authority': { department: 'Port Operations', designation: 'Port Officer' },
+                'meteorology': { department: 'Weather Services', designation: 'Meteorologist' }
+            };
+            
+            if (suggestions[value]) {
+                departmentInput.placeholder = `e.g., ${suggestions[value].department}`;
+                designationInput.placeholder = `e.g., ${suggestions[value].designation}`;
+            }
+        });
+
+        console.log('🌊 Registration page fully initialized with Ocean Theme');
+    </script>
+</body>
+</html>

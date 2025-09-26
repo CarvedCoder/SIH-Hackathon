@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - OceanGuardian SAGE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Ocean Theme Colors - matching index.html */
+            --primary-color: #1e3a8a;      /* Navy Blue */
+            --secondary-color: #0f172a;     /* Deep Black */
+            --accent-color: #065f46;        /* Dark Green */
+            --success-color: #10b981;       /* Green */
+            --warning-color: #f59e0b;       /* Amber */
+            --error-color: #ef4444;         /* Red */
+            
+            /* Background Colors */
+            --bg-primary: #000000;          /* Pure Black */
+            --bg-secondary: #0f172a;        /* Dark Slate */
+            --bg-tertiary: #1e293b;         /* Lighter Slate */
+            --text-primary: #f8fafc;        /* Light Gray */
+            --text-secondary: #cbd5e1;      /* Medium Gray */
+            --text-muted: #94a3b8;          /* Muted Gray */
+            
+            --border-color: #334155;        /* Border Gray */
+            --hover-bg: #1e3a8a;            /* Navy Blue Hover */
+            
+            /* Ocean Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            --gradient-accent: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            --gradient-hero: linear-gradient(135deg, #000000 0%, #1e3a8a 70%, #065f46 100%);
+            --gradient-ocean: linear-gradient(180deg, #1e3a8a 0%, #1e3a8a 70%, #065f46 100%);
+            
+            /* Enhanced Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6);
+            --shadow-ocean: 0 25px 50px -12px rgba(30, 58, 138, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--gradient-hero);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            color: var(--text-primary);
+        }
+
+        /* Animated background elements */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96V200H1392C1344,200,1248,200,1152,200C1056,200,960,200,864,200C768,200,672,200,576,200C480,200,384,200,288,200C192,200,96,200,48,200L0,200Z' fill='%23065f46' fill-opacity='0.2'/%3E%3C/svg%3E") repeat-x;
+            animation: wave 15s ease-in-out infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            animation-delay: -5s;
+            opacity: 0.5;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50px); }
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s ease-in-out infinite;
+            color: rgba(6, 95, 70, 0.4);
+        }
+
+        .floating-element:nth-child(1) {
+            top: 15%;
+            left: 5%;
+            animation-delay: 0s;
+            font-size: 40px;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 70%;
+            right: 10%;
+            animation-delay: 7s;
+            font-size: 60px;
+        }
+
+        .floating-element:nth-child(3) {
+            top: 40%;
+            right: 25%;
+            animation-delay: 14s;
+            font-size: 35px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(3deg); }
+            66% { transform: translateY(10px) rotate(-3deg); }
+        }
+
+        .login-container {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            border-radius: 24px;
+            box-shadow: var(--shadow-ocean);
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            position: relative;
+            margin: 20px;
+            z-index: 10;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 0 30px rgba(30, 58, 138, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 40px rgba(6, 95, 70, 0.6);
+        }
+
+        .logo i {
+            color: white;
+            font-size: 32px;
+        }
+
+        .brand-title {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .brand-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .user-type-selector {
+            display: flex;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            border-radius: 16px;
+            padding: 4px;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .user-type-option {
+            flex: 1;
+            padding: 16px 24px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+            color: var(--text-secondary);
+        }
+
+        .user-type-option.active {
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .user-type-option:hover:not(.active) {
+            color: var(--text-primary);
+            background: rgba(30, 58, 138, 0.2);
+        }
+
+        .user-type-option i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(51, 65, 85, 0.8);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(30, 41, 59, 0.8);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2), 0 0 20px rgba(30, 58, 138, 0.3);
+            transform: translateY(-2px);
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .input-icon .form-input:focus + i,
+        .input-icon:hover i {
+            color: var(--accent-color);
+        }
+
+        .input-icon .form-input {
+            padding-left: 52px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 18px;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--accent-color);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 24px;
+        }
+
+        .forgot-password a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-password a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-button:hover:not(.loading) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-ocean);
+        }
+
+        .login-button:hover::before {
+            left: 100%;
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button.loading {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+
+        .button-spinner {
+            display: none;
+            margin-right: 8px;
+        }
+
+        .loading .button-spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .divider {
+            text-align: center;
+            margin: 32px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(51, 65, 85, 0.8);
+        }
+
+        .divider span {
+            background: var(--bg-secondary);
+            padding: 0 16px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .social-button {
+            padding: 12px;
+            border: 2px solid rgba(51, 65, 85, 0.8);
+            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.8);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-button:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(30, 58, 138, 0.3);
+            background: rgba(30, 58, 138, 0.2);
+            color: var(--text-primary);
+        }
+
+        .social-button i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .google { color: #db4437; }
+        .microsoft { color: #00a1f1; }
+
+        .signup-link {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .signup-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .signup-link a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: none;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .alert.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .alert.info {
+            background: rgba(30, 58, 138, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(30, 58, 138, 0.3);
+        }
+
+        .authority-indicator {
+            display: none;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 16px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(6, 95, 70, 0.4);
+        }
+
+        .authority-indicator.show {
+            display: block;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-spinner {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: var(--shadow-ocean);
+            backdrop-filter: blur(20px);
+        }
+
+        .loading-spinner i {
+            font-size: 48px;
+            color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        .loading-spinner p {
+            color: var(--text-secondary);
+        }
+
+        /* Session info display */
+        .session-info {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(30, 58, 138, 0.3);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 16px;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .session-info.show {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 24px;
+                margin: 16px;
+                border-radius: 20px;
+            }
+
+            .brand-title {
+                font-size: 24px;
+            }
+
+            .user-type-option {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-element {
+                display: none;
+            }
+        }
+
+        /* Ocean-themed additional effects */
+        .ocean-glow {
+            box-shadow: 0 0 30px rgba(30, 58, 138, 0.3), 0 0 60px rgba(6, 95, 70, 0.2);
+        }
+
+        /* Form interactions */
+        .form-group {
+            position: relative;
+        }
+
+        .form-group::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .form-group:focus-within::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    
+    <div class="floating-elements">
+        <i class="fas fa-exclamation-triangle floating-element"></i>
+        <i class="fas fa-map-marker-alt floating-element"></i>
+        <i class="fas fa-wave-square floating-element"></i>
+    </div>
+    
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <p id="loadingText">Authenticating...</p>
+        </div>
+    </div>
+    
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-water"></i>
+            </div>
+            <h1 class="brand-title">OceanGuardian SAGE</h1>
+            <p class="brand-subtitle">Protecting India's coastal communities</p>
+        </div>
+
+        <div class="user-type-selector">
+            <div class="user-type-option active" data-type="citizen">
+                <i class="fas fa-user"></i>
+                Citizen
+            </div>
+            <div class="user-type-option" data-type="authority">
+                <i class="fas fa-shield-alt"></i>
+                Authority
+            </div>
+        </div>
+
+        <div class="authority-indicator" id="authorityIndicator">
+            <i class="fas fa-info-circle"></i>
+            Authority access requires verified credentials
+        </div>
+
+        <div class="alert" id="alertMessage"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="email">Email Address</label>
+                <div class="input-icon">
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-icon">
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+                </div>
+            </div>
+
+            <div class="form-group" id="authorityFields" style="display: none;">
+                <label class="form-label" for="authorityId">Authority ID</label>
+                <div class="input-icon">
+                    <input type="text" id="authorityId" name="authority_id" class="form-input" placeholder="Enter your authority ID">
+                    <i class="fas fa-id-card"></i>
+                </div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#" onclick="showForgotPassword()">Forgot your password?</a>
+            </div>
+
+            <button type="submit" class="login-button" id="loginBtn">
+                <i class="fas fa-spinner button-spinner"></i>
+                <span id="loginText">Sign In</span>
+            </button>
+        </form>
+
+        <div class="divider">
+            <span>Or continue with</span>
+        </div>
+
+        <div class="social-login">
+            <button class="social-button" onclick="socialLogin('google')">
+                <i class="fab fa-google google"></i>
+                Google
+            </button>
+            <button class="social-button" onclick="socialLogin('microsoft')">
+                <i class="fab fa-microsoft microsoft"></i>
+                Microsoft
+            </button>
+        </div>
+
+        <div class="signup-link">
+            Don't have an account? <a href="#" onclick="showSignup()">Sign up here</a>
+        </div>
+
+        <!-- Session info for debugging -->
+        <div class="session-info" id="sessionInfo">
+            Session tracking enabled
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:5000/api'; // Change to your backend URL
+        let currentUserType = 'citizen';
+        let sessionData = {};
+
+        // User type selector functionality
+        document.querySelectorAll('.user-type-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.user-type-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+                currentUserType = this.dataset.type;
+                
+                const authorityFields = document.getElementById('authorityFields');
+                const authorityIndicator = document.getElementById('authorityIndicator');
+                
+                if (currentUserType === 'authority') {
+                    authorityFields.style.display = 'block';
+                    authorityIndicator.classList.add('show');
+                    document.getElementById('authorityId').required = true;
+                } else {
+                    authorityFields.style.display = 'none';
+                    authorityIndicator.classList.remove('show');
+                    document.getElementById('authorityId').required = false;
+                    document.getElementById('authorityId').value = '';
+                }
+            });
+        });
+
+        // Password toggle functionality
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Get user location for session tracking
+        async function getUserLocation() {
+            return new Promise((resolve) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            resolve({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                                accuracy: position.coords.accuracy
+                            });
+                        },
+                        () => {
+                            resolve(null);
+                        },
+                        { timeout: 5000 }
+                    );
+                } else {
+                    resolve(null);
+                }
+            });
+        }
+
+        // Get device information
+        function getDeviceInfo() {
+            const userAgent = navigator.userAgent;
+            const platform = navigator.platform;
+            const language = navigator.language;
+            
+            return {
+                userAgent,
+                platform,
+                language,
+                screenResolution: `${screen.width}x${screen.height}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                cookieEnabled: navigator.cookieEnabled,
+                onlineStatus: navigator.onLine
+            };
+        }
+
+        // Show/hide loading overlay
+        function toggleLoadingOverlay(show, text = 'Loading...') {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            
+            if (show) {
+                loadingText.textContent = text;
+                overlay.classList.add('show');
+            } else {
+                overlay.classList.remove('show');
+            }
+        }
+
+        // Form submission with MongoDB integration
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const loginText = document.getElementById('loginText');
+            
+            // Show loading states
+            loginBtn.classList.add('loading');
+            loginText.textContent = 'Signing In...';
+            toggleLoadingOverlay(true, 'Authenticating with server...');
+            
+            try {
+                // Get user location and device info
+                const userLocation = await getUserLocation();
+                const deviceInfo = getDeviceInfo();
+                
+                // Prepare form data
+                const formData = {
+                    email: document.getElementById('email').value.trim(),
+                    password: document.getElementById('password').value,
+                    userType: currentUserType,
+                    authorityId: currentUserType === 'authority' ? document.getElementById('authorityId').value.trim() : null,
+                    clientInfo: {
+                        location: userLocation,
+                        device: deviceInfo,
+                        timestamp: new Date().toISOString()
+                    }
+                };
+
+                // Validate form data
+                if (!formData.email || !formData.password) {
+                    throw new Error('Please fill in all required fields');
+                }
+
+                if (currentUserType === 'authority' && !formData.authorityId) {
+                    throw new Error('Authority ID is required for authority login');
+                }
+
+                // Simulate API call for demo
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Simulate successful login
+                const result = {
+                    success: true,
+                    token: 'demo-token-' + Date.now(),
+                    sessionId: 'session-' + Math.random().toString(36).substr(2, 9),
+                    user: {
+                        email: formData.email,
+                        userType: currentUserType,
+                        loginCount: Math.floor(Math.random() * 50) + 1
+                    }
+                };
+
+                if (result.success) {
+                    // Store session data
+                    sessionData = {
+                        token: result.token,
+                        sessionId: result.sessionId,
+                        user: result.user
+                    };
+
+                    // Show success message
+                    showAlert(`Welcome back, ${result.user.email}! Login successful.`, 'success');
+                    
+                    // Show session info for debugging
+                    const sessionInfo = document.getElementById('sessionInfo');
+                    sessionInfo.innerHTML = `
+                        <strong>Session Created:</strong><br>
+                        User: ${result.user.userType}<br>
+                        Session ID: ${result.sessionId.substring(0, 8)}...<br>
+                        Login Count: ${result.user.loginCount}
+                    `;
+                    sessionInfo.classList.add('show');
+                    
+                    // Redirect after delay
+                    setTimeout(() => {
+                        if (result.user.userType === 'authority') {
+                            window.location.href = 'index.html?view=authority';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }, 2000);
+
+                } else {
+                    // Show error message from server
+                    throw new Error(result.message || 'Login failed');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert(error.message || 'An error occurred during login. Please try again.', 'error');
+            } finally {
+                // Remove loading states
+                loginBtn.classList.remove('loading');
+                loginText.textContent = 'Sign In';
+                toggleLoadingOverlay(false);
+            }
+        });
+
+        // Alert system
+        function showAlert(message, type = 'info') {
+            const alertElement = document.getElementById('alertMessage');
+            alertElement.textContent = message;
+            alertElement.className = `alert ${type}`;
+            alertElement.style.display = 'block';
+            
+            // Auto-hide after 5 seconds for non-error messages
+            if (type !== 'error') {
+                setTimeout(() => {
+                    alertElement.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Social login integration
+        async function socialLogin(provider) {
+            toggleLoadingOverlay(true, `Connecting with ${provider}...`);
+            
+            try {
+                // This would integrate with actual OAuth providers
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                showAlert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login integration will be implemented with OAuth 2.0`, 'info');
+            } catch (error) {
+                showAlert(`Failed to connect with ${provider}`, 'error');
+            } finally {
+                toggleLoadingOverlay(false);
+            }
+        }
+
+        // Navigation functions
+        function showForgotPassword() {
+            showAlert('Forgot password functionality will send reset link to your email.', 'info');
+        }
+
+        function showSignup() {
+            showAlert('Redirecting to signup page...', 'info');
+            setTimeout(() => {
+                window.location.href = 'register.html';
+            }, 1000);
+        }
+
+        // Check if user is already logged in
+        function checkExistingSession() {
+            // For demo purposes, we'll skip this check
+            console.log('Checking for existing session...');
+        }
+
+        // Add interactive effects
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.classList.add('ocean-glow');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+                this.parentElement.classList.remove('ocean-glow');
+            });
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for existing session
+            checkExistingSession();
+            
+            // Show session info for debugging
+            document.getElementById('sessionInfo').classList.add('show');
+            
+            console.log('🌊 OceanGuardian SAGE Login Page Loaded');
+            console.log('📊 Ocean Theme Applied');
+            console.log('🔒 Session Tracking Enabled');
+        });
+
+        // Handle page visibility change for session tracking
+        document.addEventListener('visibilitychange', function() {
+            if (sessionData.sessionId) {
+                const activity = {
+                    sessionId: sessionData.sessionId,
+                    action: document.hidden ? 'page_hidden' : 'page_visible',
+                    timestamp: new Date().toISOString()
+                };
+                
+                console.log('Page visibility changed:', activity);
+            }
+        });
+
+        // Handle beforeunload for logout tracking
+        window.addEventListener('beforeunload', function() {
+            if (sessionData.sessionId && sessionData.token) {
+                console.log('User leaving page, session:', sessionData.sessionId);
+            }
+        });
+
+        // Add ocean wave animation effect on form interactions
+        document.querySelectorAll('.user-type-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Create ripple effect
+                const rect = this.getBoundingClientRect();
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(30, 58, 138, 0.3);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    left: 50%;
+                    top: 50%;
+                    width: 20px;
+                    height: 20px;
+                    margin-left: -10px;
+                    margin-top: -10px;
+                `;
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
